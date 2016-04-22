@@ -21,10 +21,9 @@ public class CsCombineExecutor extends Executor {
 		
 		List<IChangeSet> changeSets = repo.getChangeSets(getWorkItemIds());
 		List<FileData> fileDatas = repo.getFileDatasFromChangeSets(changeSets);
-		for (FileData fileData : fileDatas) {
-			FileManager manager = new FileManager();
-			manager.execute(fileData);
-		}
+		
+		FileManager manager = new FileManager(true);
+		manager.execute(fileDatas);
 	}
 
 	@Override

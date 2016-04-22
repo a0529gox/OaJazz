@@ -13,6 +13,7 @@ import com.ibm.team.scm.common.IChange;
 import com.webcomm.oa.jazz.data.FileData;
 import com.webcomm.oa.jazz.factory.PrinterFactory;
 import com.webcomm.oa.jazz.print.Printer;
+import com.webcomm.oa.jazz.util.FileUtils;
 import com.webcomm.oa.jazz.util.SettingReader;
 
 public class FileManager {
@@ -21,7 +22,17 @@ public class FileManager {
 	private Printer printer = PrinterFactory.getPrinter();
 	
 	public FileManager() {
-		
+		this(false);
+	}
+	
+	public FileManager(boolean cleanOutput) {
+		if (cleanOutput) {
+			printer.print("Clean the files...");
+			Path outputP = Paths.get(outputLoc);
+			for (File f : outputP.toFile().listFiles()) {
+				FileUtils.remove(f);
+			}
+		}
 	}
 	
 	public void execute(List<FileData> fileDatas) {
